@@ -8,6 +8,7 @@
  * @Time: 11:10
  * @Description: 缓存后端数据储存适配器接口
  */
+
 namespace plusPHP\Cache;
 
 interface BackendInterface
@@ -27,7 +28,7 @@ interface BackendInterface
      * @description 获取缓存前端对象
      * @return FrontendInterface
      */
-    public function getFrontend() : FrontendInterface;
+    public function getFrontend(): FrontendInterface;
 
     /**
      * save
@@ -39,7 +40,7 @@ interface BackendInterface
      * @param int $lifetime
      * @return bool
      */
-    public function save($keyName, $content, int $lifetime = null) : bool;
+    public function save($keyName, $content, int $lifetime = null): bool;
 
     /**
      * get
@@ -59,7 +60,7 @@ interface BackendInterface
      * @param $keyName
      * @return mixed
      */
-    public function delete($keyName) : bool;
+    public function delete($keyName): bool;
 
     /**
      * exists
@@ -69,7 +70,7 @@ interface BackendInterface
      * @param $keyName
      * @return mixed
      */
-    public function effective($keyName) : bool;
+    public function effective($keyName): bool;
 
     /**
      * setOption

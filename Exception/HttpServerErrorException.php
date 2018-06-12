@@ -8,6 +8,7 @@
  * @Time: 22:03
  * @Description: 服务器内部错误异常
  */
+
 namespace plusPHP\Exception;
 
 

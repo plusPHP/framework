@@ -8,6 +8,7 @@
  * @Time: 13:46
  * @Description: 依赖注入容器接口
  */
+
 namespace plusPHP;
 
 interface DiInterface extends \ArrayAccess
@@ -66,7 +67,7 @@ interface DiInterface extends \ArrayAccess
      * @param string $name
      * @return bool
      */
-    public function has(string $name) : bool;
+    public function has(string $name): bool;
 
     /**
      * attempt
@@ -107,6 +108,6 @@ interface DiInterface extends \ArrayAccess
      * @description 获取全局容器
      * @return mixed
      */
-    public static function getContainer() : DiInterface;
+    public static function getContainer(): DiInterface;
 
 }

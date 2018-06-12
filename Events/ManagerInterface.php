@@ -8,6 +8,7 @@
  * @Time: 22:23
  * @Description: 事件管理器接口
  */
+
 namespace plusPHP\Events;
 
 interface ManagerInterface

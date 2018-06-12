@@ -8,6 +8,7 @@
  * @Time: 17:59
  * @Description: 缓存后端储存适配器(文件)
  */
+
 namespace plusPHP\Cache\Backend;
 
 use plusPHP\Cache\BackendInterface;
@@ -41,7 +42,7 @@ class File implements BackendInterface
     }
 
 
-    public function save($keyName, $content, int $lifetime = null) : bool
+    public function save($keyName, $content, int $lifetime = null): bool
     {
         $data = $this->getFrontend()->serialize($content);
 
@@ -54,7 +55,7 @@ class File implements BackendInterface
         }
 
         $cacheFile = $this->_options['cache_dir'] . $keyName;
-        $status = file_put_contents($cacheFile, (time() + $lifetime)."\n".$data);
+        $status = file_put_contents($cacheFile, (time() + $lifetime) . "\n" . $data);
         return $status;
     }
 
@@ -69,7 +70,7 @@ class File implements BackendInterface
         return $this->_frontend;
     }
 
-    public function effective($keyName) : bool
+    public function effective($keyName): bool
     {
         if (!$this->dir_exists($this->_options['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
@@ -97,7 +98,7 @@ class File implements BackendInterface
     }
 
 
-    public function delete($keyName) : bool
+    public function delete($keyName): bool
     {
         if (!$this->dir_exists($this->_options['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
@@ -106,7 +107,7 @@ class File implements BackendInterface
         $cacheFile = $this->_options['cache_dir'] . $keyName;
 
         if (!is_file($cacheFile)) {
-             return false;
+            return false;
         }
         return unlink($cacheFile);
     }
@@ -146,7 +147,7 @@ class File implements BackendInterface
 
         if ($mk && mkdir($dir, $mode, true)) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

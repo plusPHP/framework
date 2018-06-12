@@ -8,6 +8,7 @@
  * @Time: 14:05
  * @Description: 配置(Json文件)
  */
+
 namespace plusPHP\Config\Adapter;
 
 use plusPHP\Config\Config;

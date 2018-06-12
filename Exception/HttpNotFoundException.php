@@ -8,6 +8,7 @@
  * @Time: 21:54
  * @Description: http未找到异常
  */
+
 namespace plusPHP\Exception;
 
 class HttpNotFoundException extends HttpException

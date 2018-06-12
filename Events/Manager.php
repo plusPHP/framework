@@ -8,6 +8,7 @@
  * @Time: 22:20
  * @Description: 事件管理器
  */
+
 namespace plusPHP\Events;
 
 class Manager implements ManagerInterface
@@ -59,9 +60,9 @@ class Manager implements ManagerInterface
                 }
                 $status = $this->markQueue($fireEvents, $event);
             }
-		}
+        }
 
-		return $status;
+        return $status;
     }
 
 

@@ -8,6 +8,7 @@
  * @Time: 11:15
  * @Description: 缓存前端数据序列化适配器接口
  */
+
 namespace plusPHP\Cache;
 
 interface FrontendInterface

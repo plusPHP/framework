@@ -8,6 +8,7 @@
  * @Time: 14:20
  * @Description: 事件感知接口
  */
+
 namespace plusPHP\Events;
 
 
@@ -31,6 +32,6 @@ interface EventsAwareInterface
      * @description 获取事件管理器
      * @return ManagerInterface
      */
-	public function getEventsManager() : ManagerInterface;
+    public function getEventsManager(): ManagerInterface;
 
 }

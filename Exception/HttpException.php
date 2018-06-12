@@ -8,6 +8,7 @@
  * @Time: 21:12
  * @Description: Http应用错误基础类
  */
+
 namespace plusPHP\Exception;
 
 use plusPHP\Exception;
@@ -47,7 +48,7 @@ class HttpException extends Exception
      * @description 获取http响应代码
      * @return int
      */
-    public function getHttpCode() : int
+    public function getHttpCode(): int
     {
         return $this->_httpCode;
     }
@@ -119,7 +120,7 @@ class HttpException extends Exception
      * @description 获取全部响应内容
      * @return array
      */
-    public function getContents() : array
+    public function getContents(): array
     {
         return $this->_httpContents;
     }

@@ -8,6 +8,7 @@
  * @Time: 16:38
  * @Description: 配置(Ini文件)
  */
+
 namespace plusPHP\Config\Adapter;
 
 use plusPHP\Config\ConfigInterface;

@@ -8,6 +8,7 @@
  * @Time: 13:45
  * @Description: 依赖注入容器类
  */
+
 namespace plusPHP;
 
 use plusPHP\Di\Server;
@@ -80,10 +81,10 @@ class Di implements DiInterface, EventsAwareInterface
         }
 
         $this->_eventsManager &&
-            $this->_eventsManager->mark('di:beforeServiceResolve', $this, [
-                'name' => $name,
-                'parameters' => $parameters
-            ]);
+        $this->_eventsManager->mark('di:beforeServiceResolve', $this, [
+            'name' => $name,
+            'parameters' => $parameters
+        ]);
 
         if (isset($this->_service[$name])) {
             $server = $this->_service[$name]['server'];
@@ -100,7 +101,7 @@ class Di implements DiInterface, EventsAwareInterface
             }
 
             $this->_eventsManager &&
-                $this->_eventsManager->mark('di:afterServiceResolve', $this, $instance);
+            $this->_eventsManager->mark('di:afterServiceResolve', $this, $instance);
             return $instance;
         } else {
             throw new \UnexpectedValueException(sprintf('Undefined services %s!', $name));
@@ -163,7 +164,7 @@ class Di implements DiInterface, EventsAwareInterface
         unset($this->_service[$name], $this->_sharedInstances[$name]);
     }
 
-    public static function getContainer() : DiInterface
+    public static function getContainer(): DiInterface
     {
         if (!self::$_container instanceof self) {
             self::$_container = new self();
@@ -201,7 +202,7 @@ class Di implements DiInterface, EventsAwareInterface
     }
 
 
-    public function getEventsManager() : ManagerInterface
+    public function getEventsManager(): ManagerInterface
     {
         return $this->_eventsManager;
     }

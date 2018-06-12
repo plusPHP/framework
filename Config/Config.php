@@ -8,6 +8,7 @@
  * @Time: 9:39
  * @Description: 配置(本地数组)
  */
+
 namespace plusPHP\Config;
 
 class Config implements ConfigInterface

@@ -8,6 +8,7 @@
  * @Time: 10:42
  * @Description: 配置
  */
+
 namespace plusPHP\Config;
 
 
@@ -21,7 +22,7 @@ interface ConfigInterface extends \ArrayAccess, \Countable
      * @description 获取当前全部配置数据
      * @return array
      */
-    public function getAllConfig() : array;
+    public function getAllConfig(): array;
 
     /**
      * getConfig
@@ -42,7 +43,7 @@ interface ConfigInterface extends \ArrayAccess, \Countable
      * @param $config array 配置数组
      * @return ConfigInterface 返回当前的配置对象
      */
-    public function setAllConfig(array $config) : ConfigInterface;
+    public function setAllConfig(array $config): ConfigInterface;
 
     /**
      * setConfig
@@ -54,16 +55,16 @@ interface ConfigInterface extends \ArrayAccess, \Countable
      * @param $onlyUndefined bool 是否覆盖原配置，如果原配置存在
      * @return ConfigInterface 返回当前的配置对象
      */
-    public function setConfig($name, $value, $onlyUndefined = false) : ConfigInterface;
+    public function setConfig($name, $value, $onlyUndefined = false): ConfigInterface;
 
     /**
      * merge
      * @date 2018/5/11
      * @author Naizui_ycx chenxi2511@qq.com
      * @description 合并多个配置
-     * @param $configs[] ConfigInterface
+     * @param $configs [] ConfigInterface
      * @return ConfigInterface 返回当前的配置对象(合并后)
      */
-    public function merge(ConfigInterface ...$configs) : ConfigInterface;
+    public function merge(ConfigInterface ...$configs): ConfigInterface;
 
 }

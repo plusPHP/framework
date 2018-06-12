@@ -8,6 +8,7 @@
  * @Time: 13:57
  * @Description: 多级缓存
  */
+
 namespace plusPHP\Cache;
 
 class Multiple
@@ -37,10 +38,10 @@ class Multiple
      * @return $this
      */
     public function push(BackendInterface $backend)
-	{
-		$this->_backends[] = $backend;
-		return $this;
-	}
+    {
+        $this->_backends[] = $backend;
+        return $this;
+    }
 
     /**
      * get
@@ -52,7 +53,7 @@ class Multiple
      * @return mixed|null
      */
     public function get($keyName, $notExpired = false)
-	{
+    {
         foreach ($this->_backends as $backend) {
             $content = $backend->get($keyName, $notExpired);
             if ($content != null) {
@@ -60,7 +61,7 @@ class Multiple
             }
         }
         return null;
-	}
+    }
 
     /**
      * save
@@ -71,7 +72,7 @@ class Multiple
      * @param $content
      * @param int $lifetime
      */
-	public function save($keyName, $content, int $lifetime)
+    public function save($keyName, $content, int $lifetime)
     {
         foreach ($this->_backends as $backend) {
             $content = $backend->save($keyName, $content, $lifetime);
@@ -87,8 +88,8 @@ class Multiple
      * @param bool $notExpired
      * @return bool
      */
-    public function delete($keyName, $notExpired = false) : bool
-	{
+    public function delete($keyName, $notExpired = false): bool
+    {
         foreach ($this->_backends as $backend) {
             $backend->delete($keyName, $notExpired);
         }
@@ -104,7 +105,7 @@ class Multiple
      * @param bool $notExpired
      * @return bool
      */
-    public function exists($keyName, $notExpired = false) : bool
+    public function exists($keyName, $notExpired = false): bool
     {
         foreach ($this->_backends as $backend) {
             if ($backend->exists($keyName, $notExpired)) {

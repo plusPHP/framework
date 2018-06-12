@@ -8,6 +8,7 @@
  * @Time: 13:45
  * @Description: 配置(Yaml文件)
  */
+
 namespace plusPHP\Config\Adapter;
 
 use plusPHP\Config\Config;
@@ -20,15 +21,15 @@ class Yaml extends Config
     {
         $ndocs = 0;
 
-		if (!extension_loaded('yaml')) {
-			throw new \Exception('Yaml extension not loaded');
-		}
+        if (!extension_loaded('yaml')) {
+            throw new \Exception('Yaml extension not loaded');
+        }
 
         if ($callbacks !== null) {
             $yamlConfig = yaml_parse_file($yamlFilePath, 0, $ndocs, $callbacks);
-		} else {
+        } else {
             $yamlConfig = yaml_parse_file($yamlFilePath);
-		}
+        }
 
         call_user_func_array('parent::__construct', array_merge([$yamlConfig], $configs));
     }

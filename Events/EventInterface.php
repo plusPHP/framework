@@ -8,6 +8,7 @@
  * @Time: 23:20
  * @Description: 事件接口
  */
+
 namespace plusPHP\Events;
 
 
@@ -50,7 +51,7 @@ interface EventInterface
      * @description 获取事件类型
      * @return string
      */
-    public function getEventName() : string;
+    public function getEventName(): string;
 
     /**
      * getData
