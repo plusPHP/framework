@@ -51,7 +51,7 @@ class Wincache implements BackendInterface
         return $this->_frontend;
     }
 
-    public function save($keyName, $content, int $lifetime = null) : bool
+    public function save($keyName, $content, int $lifetime = null): bool
     {
         $data = $this->getFrontend()->serialize($content);
         return wincache_ucache_set($keyName, $data, $lifetime);
