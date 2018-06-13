@@ -73,7 +73,7 @@ interface ManagerInterface
      * getResponses
      * @date 2018/6/8
      * @author Naizui_ycx chenxi2511@qq.com
-     * @description 返回所有监听器
+     * @description 返回当前已执行的所有监听器的执行结果
      * @return mixed
      */
     public function getResponses();
