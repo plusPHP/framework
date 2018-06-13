@@ -29,7 +29,7 @@ interface ManagerInterface
      * remove
      * @date 2018/6/7
      * @author Naizui_ycx chenxi2511@qq.com
-     * @description 删除一个埋点
+     * @description 删除一个埋点上当前挂载的事件监听器
      * @param string $eventType
      * @return mixed
      */
@@ -39,7 +39,7 @@ interface ManagerInterface
      * removeAll
      * @date 2018/6/7
      * @author Naizui_ycx chenxi2511@qq.com
-     * @description 删除所有埋点
+     * @description 删除所有埋点上当前挂载的事件监听器
      * @return mixed
      */
     public function removeAll();
