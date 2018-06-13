@@ -132,12 +132,14 @@ class Mongo extends Backend implements BackendInterface
 
         if (is_array($document)) {
             $document['time'] = $timestamp;
-            $document['data'] = $this->getFrontend()->serialize($content);
+            is_numeric($content) ? $document['data'] = $content
+                : $document['data'] = $this->getFrontend()->serialize($content);
             return $collection->update(['_id' => $document['_id']], $document);
         } else {
             $data['key'] = $keyName;
             $data['time'] = $timestamp;
-            $data['data'] = $this->getFrontend()->serialize($content);
+            is_numeric($content) ? $document['data'] = $content
+                : $document['data'] = $this->getFrontend()->serialize($content);
             return $collection->insert($data);
         }
     }

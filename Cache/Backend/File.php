@@ -36,7 +36,8 @@ class File extends Backend implements BackendInterface
             throw new \InvalidArgumentException('The cache key name must be a string!');
         }
 
-        $data = $this->getFrontend()->serialize($content);
+        is_numeric($content) ? $data = $content
+            : $data = $this->getFrontend()->serialize($content);
 
         if (!(is_string($data) || is_numeric($data) || (is_object($data) && method_exists($data, 'toString')))) {
             throw new \InvalidArgumentException('The file cache data must be a string. Please use the correct cache frontend!');
@@ -137,7 +138,10 @@ class File extends Backend implements BackendInterface
         if (!is_numeric($expired) || $expired <= time()) {
             return false;
         } else {
-            return $this->getFrontend()->deserialize(substr($fileContent, 11));
+            $cache = substr($fileContent, 11);
+            is_numeric($cache) ? $data = $cache
+                : $data = $this->getFrontend()->serialize($cache);
+            return $data;
         }
     }
 

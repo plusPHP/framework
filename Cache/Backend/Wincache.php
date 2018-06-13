@@ -26,9 +26,16 @@ class Wincache extends Backend implements BackendInterface
 
     public function get($keyName, $notExpired = true)
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
         $cachedContent = wincache_ucache_get($keyName, $success);
         if ($success === false) {
             return null;
+        }
+
+        if (is_numeric($cachedContent)) {
+            return $cachedContent;
         }
         return $this->getFrontend()->deserialize($cachedContent);
     }
@@ -36,20 +43,30 @@ class Wincache extends Backend implements BackendInterface
 
     public function delete($keyName, $notExpired = true): bool
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
         return wincache_ucache_delete($keyName);
     }
 
 
     public function effective($keyName, $notExpired = true): bool
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
         return wincache_ucache_exists($keyName);
     }
 
 
     public function save($keyName, $content, int $lifetime = null): bool
     {
-        $data = $this->getFrontend()->serialize($content);
-        return wincache_ucache_set($keyName, $data, $lifetime);
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+        is_numeric($content) ? $preparedContent = $content
+            : $preparedContent = $this->getFrontend()->serialize($content);
+        return wincache_ucache_set($keyName, $preparedContent, $lifetime);
     }
 
 }
