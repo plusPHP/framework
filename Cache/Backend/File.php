@@ -44,6 +44,10 @@ class File implements BackendInterface
 
     public function save($keyName, $content, int $lifetime = null): bool
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+
         $data = $this->getFrontend()->serialize($content);
 
         if (!(is_string($data) || is_numeric($data) || (is_object($data) && method_exists($data, 'toString')))) {
@@ -72,6 +76,10 @@ class File implements BackendInterface
 
     public function effective($keyName): bool
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+
         if (!$this->dir_exists($this->_options['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
         }
@@ -100,6 +108,10 @@ class File implements BackendInterface
 
     public function delete($keyName): bool
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+
         if (!$this->dir_exists($this->_options['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
         }
@@ -114,6 +126,10 @@ class File implements BackendInterface
 
     public function get($keyName)
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+
         if (!$this->dir_exists($this->_options['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
         }

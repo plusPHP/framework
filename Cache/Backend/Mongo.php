@@ -72,6 +72,10 @@ class Mongo implements BackendInterface
      */
     public function get($keyName)
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+
         $conditions['key'] = $keyName;
         $conditions['time'] = ['$gt' => time()];
         $document = $this->getLink()->findOne($conditions);
@@ -101,6 +105,10 @@ class Mongo implements BackendInterface
      */
     public function delete($keyName): bool
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+
         $this->getLink()->remove(['key' => $keyName]);
         if (((int)rand()) % 100 == 0) {
             $this->gc();
@@ -137,6 +145,10 @@ class Mongo implements BackendInterface
      */
     public function save($keyName, $content, int $lifetime = null): bool
     {
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
+        }
+
         $collection = $this->getLink();
         $timestamp = time() + intval($lifetime);
         $conditions['key'] = $keyName;
@@ -165,10 +177,10 @@ class Mongo implements BackendInterface
      */
     public function effective($keyName): bool
     {
-        if (!empty($keyName) && is_string($keyName)) {
-            return $this->getLink()->count(['key' => $keyName, 'time' => ['$gt' => time()]]) > 0;
+        if (empty($keyName) && !is_string($keyName)) {
+            throw new \InvalidArgumentException('The cache key name must be a string!');
         }
-        return false;
+        return $this->getLink()->count(['key' => $keyName, 'time' => ['$gt' => time()]]) > 0;
     }
 
     /**
