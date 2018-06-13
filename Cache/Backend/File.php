@@ -11,34 +11,22 @@
 
 namespace plusPHP\Cache\Backend;
 
+use plusPHP\Cache\Backend;
 use plusPHP\Cache\BackendInterface;
 use plusPHP\Cache\FrontendInterface;
 
-class File implements BackendInterface
+class File extends Backend implements BackendInterface
 {
-
-    /**
-     * @description 前端适配器
-     * @var FrontendInterface
-     */
-    protected $_frontend;
-
-    /**
-     * @description 缓存路径
-     * @var string
-     */
-    protected $_options;
 
 
     public function __construct(FrontendInterface $frontend, $option = null)
     {
-        $this->_frontend = $frontend;
 
         if (!is_array($option) || empty($option['cache_dir']) || !is_string($option['cache_dir'])) {
             throw new \InvalidArgumentException('The file cache setup error is incorrect, and the array cache_dir must be set!');
         }
 
-        $this->_options = $option;
+        parent::__construct($frontend, $option);
     }
 
 
@@ -54,24 +42,15 @@ class File implements BackendInterface
             throw new \InvalidArgumentException('The file cache data must be a string. Please use the correct cache frontend!');
         }
 
-        if (!$this->dir_exists($this->_options['cache_dir'])) {
+        $option = $this->getOption();
+
+        if (!$this->dir_exists($option['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
         }
 
-        $cacheFile = $this->_options['cache_dir'] . $keyName;
+        $cacheFile = $option['cache_dir'] . $keyName;
         $status = file_put_contents($cacheFile, (time() + $lifetime) . "\n" . $data);
         return $status;
-    }
-
-
-    public function getOption()
-    {
-        return $this->_options;
-    }
-
-    public function getFrontend(): FrontendInterface
-    {
-        return $this->_frontend;
     }
 
     public function effective($keyName): bool
@@ -80,11 +59,13 @@ class File implements BackendInterface
             throw new \InvalidArgumentException('The cache key name must be a string!');
         }
 
-        if (!$this->dir_exists($this->_options['cache_dir'])) {
+        $option = $this->getOption();
+
+        if (!$this->dir_exists($option['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
         }
 
-        $cacheFile = $this->_options['cache_dir'] . $keyName;
+        $cacheFile = $option['cache_dir'] . $keyName;
 
         if (!is_file($cacheFile)) {
             return false;
@@ -112,11 +93,13 @@ class File implements BackendInterface
             throw new \InvalidArgumentException('The cache key name must be a string!');
         }
 
-        if (!$this->dir_exists($this->_options['cache_dir'])) {
+        $option = $this->getOption();
+
+        if (!$this->dir_exists($option['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
         }
 
-        $cacheFile = $this->_options['cache_dir'] . $keyName;
+        $cacheFile = $option['cache_dir'] . $keyName;
 
         if (!is_file($cacheFile)) {
             return false;
@@ -124,17 +107,20 @@ class File implements BackendInterface
         return unlink($cacheFile);
     }
 
+
     public function get($keyName)
     {
         if (empty($keyName) && !is_string($keyName)) {
             throw new \InvalidArgumentException('The cache key name must be a string!');
         }
 
-        if (!$this->dir_exists($this->_options['cache_dir'])) {
+        $option = $this->getOption();
+
+        if (!$this->dir_exists($option['cache_dir'])) {
             throw new \RuntimeException('The cache folder does not exist, trying to create a failure!');
         }
 
-        $cacheFile = $this->_options['cache_dir'] . $keyName;
+        $cacheFile = $option['cache_dir'] . $keyName;
 
         if (!is_file($cacheFile)) {
             return false;
@@ -154,6 +140,7 @@ class File implements BackendInterface
             return $this->getFrontend()->deserialize(substr($fileContent, 11));
         }
     }
+
 
     protected function dir_exists($dir, $mk = true, $mode = 0777)
     {
