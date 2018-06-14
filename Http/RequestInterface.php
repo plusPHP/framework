@@ -146,15 +146,6 @@ interface RequestInterface
     public function getUrl();
 
     /**
-     * getQueryString
-     * @date 2018/6/14
-     * @author Naizui_ycx chenxi2511@qq.com
-     * @description 获取当前的查询串
-     * @return mixed
-     */
-    public function getQueryString();
-
-    /**
      * getPort
      * @date 2018/6/14
      * @author Naizui_ycx chenxi2511@qq.com

@@ -157,12 +157,6 @@ class Request implements RequestInterface
     }
 
 
-    public function getQueryString()
-    {
-
-    }
-
-
     public function getPort()
     {
         $host = $this->getServer('HTTP_HOST');
