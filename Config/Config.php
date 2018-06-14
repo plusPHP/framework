@@ -182,7 +182,6 @@ class Config implements ConfigInterface
             $this->undefined = true;
             return false;
         }
-
     }
 
 }
