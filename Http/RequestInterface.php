@@ -183,6 +183,15 @@ interface RequestInterface
     public function getHttpReferer();
 
     /**
+     * getContentType
+     * @date 2018/6/14
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 获取请求内容类型
+     * @return string|null
+     */
+    public function getContentType();
+
+    /**
      * getClientIp
      * @date 2018/6/14
      * @author Naizui_ycx chenxi2511@qq.com

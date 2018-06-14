@@ -45,6 +45,12 @@ class Request implements RequestInterface
      */
     protected $_headers = null;
 
+    /**
+     * @description 客户端ip
+     * @var string
+     */
+    protected $_clientIp = null;
+
 
     public function getInput($name = '', $default = null)
     {
@@ -147,7 +153,7 @@ class Request implements RequestInterface
 
     public function getUri()
     {
-
+        return $this->getServer('REQUEST_URI', '');
     }
 
 
@@ -156,13 +162,28 @@ class Request implements RequestInterface
 
     }
 
+    public function getContentType()
+    {
+        if (isset($_SERVER['CONTENT_TYPE'])) {
+            return $_SERVER['CONTENT_TYPE'];
+        } else {
+            /**
+             * @see https://bugs.php.net/bug.php?id=66606
+             */
+            if (isset($_SERVER['HTTP_CONTENT_TYPE'])) {
+                return $_SERVER['HTTP_CONTENT_TYPE'];
+            }
+        }
+        return null;
+    }
+
 
     public function getPort()
     {
         $host = $this->getServer('HTTP_HOST');
         if ($host) {
             $pos = strrpos($host, ':');
-            if ( false !== $pos) {
+            if (false !== $pos) {
                 return (int)substr($host, $pos + 1);
             }
             return 'https' === $this->getScheme() ? 443 : 80;
@@ -191,7 +212,21 @@ class Request implements RequestInterface
 
     public function getClientIp()
     {
+        if ($this->_clientIp !== null) {
+            return $this->_clientIp;
+        }
 
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $arr = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+            $this->_clientIp = $arr[0];
+        } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $this->_clientIp = $_SERVER['HTTP_CLIENT_IP'];
+        }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+            $this->_clientIp = $_SERVER['REMOTE_ADDR'];
+        }
+        // IP地址合法验证
+        $this->_clientIp = (false !== ip2long($this->_clientIp)) ? $this->_clientIp : '0.0.0.0';
+        return $this->_clientIp;
     }
 
 
@@ -345,12 +380,11 @@ class Request implements RequestInterface
      * 从变量中取出相应的值
      * @param $from mixed 用来取值的变量
      * @param $name mixed 取值键
-     * @param $defaultValue mixed 默认值
+     * @param $default mixed 默认值
      * @return mixed
      * */
-    protected function variableFrom($from, $name, $defaultValue)
+    protected function variableFrom($from, $name, $default)
     {
-
         if (empty($name)) {
             $_data = $from;
         } else {
@@ -358,7 +392,7 @@ class Request implements RequestInterface
         }
 
         if ($_data === null) {
-            return $defaultValue;
+            return $default;
         } else {
             return $_data;
         }
@@ -382,7 +416,6 @@ class Request implements RequestInterface
                 }
                 $this->_headers = $headers;
             }
-
         }
         return $this->_headers;
     }
