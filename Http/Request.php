@@ -185,13 +185,13 @@ class Request implements RequestInterface
 
     public function getUserAgent()
     {
-
+        return $this->getServer('HTTP_USER_AGENT', '');
     }
 
 
     public function getHttpReferer()
     {
-
+        return $this->getServer('HTTP_REFERER', '');
     }
 
 
