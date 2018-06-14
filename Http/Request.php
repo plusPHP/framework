@@ -221,7 +221,7 @@ class Request implements RequestInterface
             $this->_clientIp = $arr[0];
         } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
             $this->_clientIp = $_SERVER['HTTP_CLIENT_IP'];
-        }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+        } elseif (isset($_SERVER['REMOTE_ADDR'])) {
             $this->_clientIp = $_SERVER['REMOTE_ADDR'];
         }
         // IP地址合法验证
