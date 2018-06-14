@@ -166,24 +166,27 @@ class Memcache extends Backend implements BackendInterface
      */
     protected function link(): \Memcache
     {
-        $option = $this->getOption();
-        if (empty($option['host']) || empty($option['port']) || empty($option['persistent'])) {
-            throw new \Exception("Unexpected inconsistency in options");
+        if (empty($this->_memcache)) {
+            $option = $this->getOption();
+            if (empty($option['host']) || empty($option['port']) || empty($option['persistent'])) {
+                throw new \Exception("Unexpected inconsistency in options");
+            }
+
+            $memcache = new \Memcache();
+
+            if ($option['persistent']) {
+                $success = $memcache->pconnect($option['host'], $option['port']);
+            } else {
+                $success = $memcache->connect($option['host'], $option['port']);
+            }
+
+            if (!$success) {
+                throw new \Exception("Cannot connect to Memcached server");
+            }
+
+            $this->_memcache = $memcache;
         }
-
-        $memcache = new \Memcache();
-
-        if ($option['persistent']) {
-            $success = $memcache->pconnect($option['host'], $option['port']);
-        } else {
-            $success = $memcache->connect($option['host'], $option['port']);
-        }
-
-        if (!$success) {
-            throw new \Exception("Cannot connect to Memcached server");
-        }
-
-        $this->_memcache = $memcache;
+        return $this->_memcache;
     }
 
 }
