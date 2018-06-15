@@ -119,15 +119,6 @@ interface RequestInterface
     public function getMethod();
 
     /**
-     * getHttpHost
-     * @date 2018/6/14
-     * @author Naizui_ycx chenxi2511@qq.com
-     * @description 获取当前的http主机名
-     * @return mixed
-     */
-    public function getHttpHost();
-
-    /**
      * getUri
      * @date 2018/6/14
      * @author Naizui_ycx chenxi2511@qq.com
@@ -135,15 +126,6 @@ interface RequestInterface
      * @return mixed
      */
     public function getUri();
-
-    /**
-     * getUrl
-     * @date 2018/6/14
-     * @author Naizui_ycx chenxi2511@qq.com
-     * @description 获取当前url
-     * @return mixed
-     */
-    public function getUrl();
 
     /**
      * getPort

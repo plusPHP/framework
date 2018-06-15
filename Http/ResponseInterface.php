@@ -16,4 +16,8 @@ namespace plusPHP\Http;
 interface ResponseInterface
 {
 
+    public function setStatusCode(int $code, $message = null): ResponseInterface;
+
+    public function setHeader($name, $value);
+
 }

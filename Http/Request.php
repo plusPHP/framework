@@ -145,21 +145,9 @@ class Request implements RequestInterface
     }
 
 
-    public function getHttpHost()
-    {
-
-    }
-
-
     public function getUri()
     {
         return $this->getServer('REQUEST_URI', '');
-    }
-
-
-    public function getUrl()
-    {
-
     }
 
     public function getContentType()
@@ -253,7 +241,7 @@ class Request implements RequestInterface
         } else {
             $file_array = $_FILES;
         }
-        return $file_array == [];
+        return !empty($file_array);
     }
 
 
