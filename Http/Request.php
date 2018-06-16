@@ -51,6 +51,24 @@ class Request implements RequestInterface
      */
     protected $_clientIp = null;
 
+    /**
+     * @description 当前Uri
+     * @var string
+     */
+    protected $_uri = null;
+
+    /**
+     * @description 当前主机
+     * @var string
+     */
+    protected $_host = null;
+
+    /**
+     * @description 当前端口号
+     * @var int
+     */
+    protected $_port = null;
+
 
     public function getInput($name = '', $default = null)
     {
@@ -81,7 +99,7 @@ class Request implements RequestInterface
 
     public function getPut($name = '', $default = null)
     {
-        if ($this->_PUT === '') {
+        if ($this->_PUT == null) {
             $this->isPut() ?
                 parse_str($this->getRawBody(), $this->_PUT)
                 : $this->_PUT = array();
@@ -92,7 +110,7 @@ class Request implements RequestInterface
 
     public function getDelete($name = '', $default = null)
     {
-        if ($this->_DELETE === '') {
+        if ($this->_DELETE == null) {
             $this->isDelete() ?
                 parse_str($this->getRawBody(), $this->_DELETE)
                 : $this->_DELETE = array();
@@ -147,8 +165,36 @@ class Request implements RequestInterface
 
     public function getUri()
     {
-        return $this->getServer('REQUEST_URI', '');
+        if ($this->_uri == null) {
+            if (isset($_SERVER['HTTP_X_REWRITE_URL'])) {
+                $this->_uri = $_SERVER['HTTP_X_REWRITE_URL'];
+            } elseif (isset($_SERVER['REQUEST_URI'])) {
+                $this->_uri = $_SERVER['REQUEST_URI'];
+            } elseif (isset($_SERVER['ORIG_PATH_INFO'])) {
+                $this->_uri = $_SERVER['ORIG_PATH_INFO'] . (!empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '');
+            } else {
+                $this->_uri = '/';
+            }
+        }
+        return $this->_uri;
     }
+
+
+    public function getUrl()
+    {
+        if ($this->isHttps()) {
+            return 'https://' . $this->getHost() . ($this->getPort() != 443 ? $this->getPort() : '') . $this->getUri();
+        } else {
+            return 'http://' . $this->getHost() . ($this->getPort() != 80 ? $this->getPort() : '') . $this->getUri();
+        }
+    }
+
+
+    public function getPath()
+    {
+        return strpos($this->getUri(), '?') ? strstr($this->getUri(), '?', true) : $this->getUri();
+    }
+
 
     public function getContentType()
     {
@@ -168,15 +214,39 @@ class Request implements RequestInterface
 
     public function getPort()
     {
-        $host = $this->getServer('HTTP_HOST');
-        if ($host) {
-            $pos = strrpos($host, ':');
-            if (false !== $pos) {
-                return (int)substr($host, $pos + 1);
+        if ($this->_port == null) {
+            $host = $this->getServer('HTTP_HOST');
+            if ($host) {
+                $pos = strrpos($host, ':');
+                if (false !== $pos) {
+                    $port = (int)substr($host, $pos + 1);
+                } else {
+                    $port = 'https' === $this->getScheme() ? 443 : 80;
+                }
             }
-            return 'https' === $this->getScheme() ? 443 : 80;
+
+            if (!isset($port)) {
+                $port = (int)$this->getServer('SERVER_PORT');
+            }
+            $this->_port = $port;
         }
-        return (int)$this->getServer('SERVER_PORT');
+        return $this->_port;
+    }
+
+
+    public function getHost()
+    {
+        if ($this->_host == null) {
+            $host = $this->getServer('HTTP_X_REAL_HOST') ?: $this->getServer('HTTP_HOST');
+            $this->_host = strpos($host, ':') ? strstr($host, ':', true) : $host;
+        }
+        return $this->_host;
+    }
+
+
+    public function getQueryString()
+    {
+        return $this->getServer('QUERY_STRING');
     }
 
 
@@ -213,7 +283,7 @@ class Request implements RequestInterface
             $this->_clientIp = $_SERVER['REMOTE_ADDR'];
         }
         // IP地址合法验证
-        $this->_clientIp = (false !== ip2long($this->_clientIp)) ? $this->_clientIp : '0.0.0.0';
+        $this->_clientIp = filter_var($this->_clientIp, FILTER_VALIDATE_IP) ? $this->_clientIp : false;
         return $this->_clientIp;
     }
 

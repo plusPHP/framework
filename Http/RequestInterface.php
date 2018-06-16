@@ -122,10 +122,10 @@ interface RequestInterface
      * getUri
      * @date 2018/6/14
      * @author Naizui_ycx chenxi2511@qq.com
-     * @description 获取当前的相对uri
+     * @description 获取当前的url
      * @return mixed
      */
-    public function getUri();
+    public function getUrl();
 
     /**
      * getPort
@@ -181,6 +181,42 @@ interface RequestInterface
      * @return mixed
      */
     public function getClientIp();
+
+    /**
+     * getHost
+     * @date 2018/6/16
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 获取当前主机
+     * @return mixed
+     */
+    public function getHost();
+
+    /**
+     * getUri
+     * @date 2018/6/16
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 获取当前页面的uri
+     * @return mixed
+     */
+    public function getUri();
+
+    /**
+     * getPath
+     * @date 2018/6/16
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 获取当前uri，不含QUERY_STRING
+     * @return mixed
+     */
+    public function getPath();
+
+    /**
+     * getQueryString
+     * @date 2018/6/16
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 获取当前QUERY_STRING
+     * @return mixed
+     */
+    public function getQueryString();
 
     /**
      * has
