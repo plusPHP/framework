@@ -183,9 +183,9 @@ class Request implements RequestInterface
     public function getUrl()
     {
         if ($this->isHttps()) {
-            return 'https://' . $this->getHost() . ($this->getPort() != 443 ? $this->getPort() : '') . $this->getUri();
+            return 'https://' . $this->getHost() . ($this->getPort() != 443 ? ':' . $this->getPort() : '') . $this->getUri();
         } else {
-            return 'http://' . $this->getHost() . ($this->getPort() != 80 ? $this->getPort() : '') . $this->getUri();
+            return 'http://' . $this->getHost() . ($this->getPort() != 80 ? ':' . $this->getPort() : '') . $this->getUri();
         }
     }
 
@@ -237,7 +237,7 @@ class Request implements RequestInterface
     public function getHost()
     {
         if ($this->_host == null) {
-            $host = $this->getServer('HTTP_X_REAL_HOST') ?: $this->getServer('HTTP_HOST');
+            $host = $this->getServer('HTTP_X_REAL_HOST') ? : $this->getServer('HTTP_HOST');
             $this->_host = strpos($host, ':') ? strstr($host, ':', true) : $host;
         }
         return $this->_host;
