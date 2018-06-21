@@ -11,7 +11,7 @@
  */
 
 
-namespace plusPHP\Http;
+namespace plusPHP\Http\Response;
 
 class Status
 {
