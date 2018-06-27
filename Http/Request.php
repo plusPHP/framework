@@ -444,15 +444,9 @@ class Request implements RequestInterface
     protected function variableFrom($from, $name, $default)
     {
         if (empty($name)) {
-            $_data = $from;
+            return $from;
         } else {
-            $_data = $this->_parseIniString($name, $from);
-        }
-
-        if ($_data === null) {
-            return $default;
-        } else {
-            return $_data;
+            return get_array_value($name, $from, $default);
         }
     }
 
@@ -478,47 +472,5 @@ class Request implements RequestInterface
         return $this->_headers;
     }
 
-    /**
-     * _parseIniString
-     * @date 2018/5/11
-     * @author Naizui_ycx chenxi2511@qq.com
-     * @description 解析string并返回相应的数组值
-     * @param $string string
-     * @param $value mixed
-     * @return mixed
-     *<code>
-     * $array = [
-     *      'db' => [
-     *          'host' => 'localhost',
-     *          'user' => [
-     *              'name' => 'root',
-     *              'password' =>  '123456',
-     *          ]
-     *      ]
-     * ];
-     * echo $this->_parseIniString('db.host', $array); // localhost
-     * echo $this->_parseIniString('db.user.name', $array); // root
-     *</code>
-     */
-    protected function _parseIniString($string, $value)
-    {
-        $pos = strpos($string, '.');
-        if ($pos === false) {
-            if (isset($value[$string])) {
-                return $value[$string];
-            } else {
-                return null;
-            }
-        }
-
-        $key = substr($string, 0, $pos);
-        $string = substr($string, $pos + 1);
-
-        if (isset($value[$key])) {
-            return $this->_parseIniString($string, $value[$key]);
-        } else {
-            return null;
-        }
-    }
 
 }

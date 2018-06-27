@@ -13,9 +13,7 @@
 namespace plusPHP\Http\Session\Handle;
 
 
-use plusPHP\Http\SessionHandleInterface;
-
-class Redis implements SessionHandleInterface
+class Redis implements \SessionHandlerInterface
 {
 
 }

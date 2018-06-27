@@ -16,4 +16,8 @@ namespace plusPHP\Http;
 interface SessionLockInterface
 {
 
+    public function lock($time = 3);
+
+    public function unlock();
+
 }

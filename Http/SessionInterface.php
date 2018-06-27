@@ -15,32 +15,125 @@ namespace plusPHP\Http;
 interface SessionInterface
 {
 
-    public function setHandle();
+    /**
+     * setHandle
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 设置session处理对象
+     * @param \SessionHandlerInterface $handler
+     * @return mixed
+     */
+    public function setHandle(\SessionHandlerInterface $handler);
 
-    public function get($name);
+    /**
+     * get
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 获取一个session值
+     * @param string $name
+     * @param string $prefix
+     * @return mixed
+     */
+    public function get(string $name, string $prefix);
 
-    public function set($name, $value, $prefix);
+    /**
+     * set
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 获取一个session值
+     * @param string $name
+     * @param $value
+     * @param string $prefix
+     * @return mixed
+     */
+    public function set(string $name, $value, string $prefix);
 
-    public function prefix($prefix);
+    /**
+     * prefix
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 设置session前缀
+     * @param string $prefix
+     * @return mixed
+     */
+    public function prefix(string $prefix);
 
+    /**
+     * init
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 初始化session
+     * @return mixed
+     */
     public function init();
 
-    public function setLock();
+    /**
+     * setLock
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 设置session锁对象
+     * @param SessionLockInterface $lock
+     * @return mixed
+     */
+    public function setLock(SessionLockInterface $lock);
 
-    public function lock();
+    /**
+     * has
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 判断session值是否存在
+     * @param string $name
+     * @param string $prefix
+     * @return bool
+     */
+    public function has(string $name, string $prefix);
 
-    public function unlock();
-
-    public function has($name, $prefix);
-
+    /**
+     * clear
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 清空session数据
+     * @return mixed
+     */
     public function clear();
 
-    public function delete($name, $prefix);
+    /**
+     * delete
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 删除session值
+     * @param string $name
+     * @param string $prefix
+     * @return mixed
+     */
+    public function delete(string $name, string $prefix);
 
+    /**
+     * destroy
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 销毁session
+     * @return mixed
+     */
     public function destroy();
 
-    public function resetSID();
+    /**
+     * resetSID
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 重置SID
+     * @param bool $delete
+     * @return mixed
+     */
+    public function resetSID($delete = false);
 
+    /**
+     * pause
+     * @date 2018/6/25
+     * @author Naizui_ycx chenxi2511@qq.com
+     * @description 暂停session
+     * @return mixed
+     */
     public function pause();
 
 }

@@ -13,9 +13,7 @@
 namespace plusPHP\Http\Session\Handle;
 
 
-use plusPHP\Http\SessionHandleInterface;
-
-class Memcache implements SessionHandleInterface
+class Memcache implements \SessionHandlerInterface
 {
 
 }
